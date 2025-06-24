@@ -1,0 +1,74 @@
+<!--formGroup peut etre nulle car il est initialisé au moment du subscribe
+ qui est asynchrone: le résultat de API ne vient pas tout de suite-->
+
+@if(formGroup!=null){
+<mat-card class="flex items-center">
+  <mat-card-header>
+    <mat-card-title>Edit contact</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      [formGroup]="formGroup"
+      class="flex flex-col gap-4 mt-5 items-center"
+      (ngSubmit)="onSubmit()"
+    >
+      <div>
+        <img
+          class="size-30 rounded-full ring-1 ring-white"
+          [src]="contact.imageUrl"
+          alt="{{ contact.nom }}"
+        />
+      </div>
+      <div id="contact-detail-nom">
+        <mat-form-field appearance="outline" class="w-full">
+          <input matInput formControlName="nom" placeholder="nom" />
+        </mat-form-field>
+      </div>
+      <div id="contact-detail-prenom">
+        <mat-form-field appearance="outline" class="w-full">
+          <input matInput formControlName="prenom" placeholder="prenom" />
+        </mat-form-field>
+      </div>
+      <div id="contact-detail-description">
+        <mat-form-field class="w-full">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+      <div id="contact-detail-email">
+        <mat-form-field appearance="outline" class="w-full">
+          <input matInput formControlName="email" placeholder="email" />
+        </mat-form-field>
+      </div>
+      <div id="contact-detail-numeroTel">
+        <mat-form-field appearance="outline" class="w-full">
+          <input matInput formControlName="numeroTel" placeholder="numeroTel" />
+        </mat-form-field>
+      </div>
+      <!-- <div>
+        <mat-form-field class="w-60">
+          <mat-label>Date</mat-label>
+          <input
+            matInput
+            formControlName="dateDeNaissance"
+            [matDatepicker]="picker"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>-->
+
+      <mat-card-actions>
+        <button mat-raised-button type="submit" (click)="onSubmit()">
+          save
+        </button>
+        <button mat-button type="button" (click)="onCancel()">cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>
+}

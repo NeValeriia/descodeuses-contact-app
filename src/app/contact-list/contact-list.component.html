@@ -1,0 +1,64 @@
+<div id="div-container" class="flex flex-col h-full">
+  <div id="contact-recherche-ajouter" class="flex flex-row">
+    <div>
+      <mat-form-field appearance="outline" class="w-full">
+        <!-- event (change) executé seulement quand on perd focus -->
+        <!-- event (keyup) executé seulement si saisi clavier -->
+        <!-- event (input) executé seulement si saisi clavier (sauf ENTER) -->
+        <input
+          matInput
+          placeholder="Rechercher.."
+          [(ngModel)]="textRecherche"
+          (input)="onSearch()"
+        />
+      </mat-form-field>
+    </div>
+    <div class="justify-end">
+      <button
+        class="h-[56px] w-[56px] border rounded-md"
+        mat-fab
+        type="submit"
+        routerLink="/contact-detail/:id"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="flex">
+    <mat-list>
+      @for(element of listeContactFiltre;track element.id){
+
+      <mat-list-item role="listitem"
+        ><div class="flex items-center">
+          <span
+            class="flex-1 cursor-pointer"
+            [routerLink]="['/contact-detail', element.id]"
+          >
+            <strong>{{ element.nom }}</strong>
+            {{ element.prenom }}</span
+          >
+
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openConfirmDialog(element.id)">
+              <mat-icon>delete</mat-icon>
+              <span>Supprimer</span>
+            </button>
+
+            <button mat-menu-item (click)="envoyerEmail(element.email)">
+              <mat-icon>mail</mat-icon>
+              <span>Envoyer e-mail</span>
+            </button>
+          </mat-menu>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      }
+    </mat-list>
+  </div>
+  <div id="div-nombre-contact" class="text-center text-gray-500 pb-2">
+    Nombre de contacts: {{ countContacts }}
+  </div>
+</div>

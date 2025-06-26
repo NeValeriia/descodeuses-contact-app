@@ -32,6 +32,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ContactDetailComponent implements OnInit {
   formGroup!: FormGroup;
   contact!: any;
+  
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +45,9 @@ export class ContactDetailComponent implements OnInit {
     //je recupere le Id de mon URL et je le converti au nombre
     //pour faire appel au fetch by ID du service CRUD
     const id = Number(this.route.snapshot.paramMap.get('id'));
-if (id>0){  //appel au service pour recuperer le contact
+
+  if (id>0){ 
+   //appel au service pour recuperer le contact
   this.contactService.getContact(id).subscribe((data) => {
     this.contact = data;
 
@@ -69,6 +72,7 @@ if (id>0){  //appel au service pour recuperer le contact
       imageUrl: new FormControl<string | null>(this.contact.imageUrl),
     });
   });
+
 } else {
   this.contact = {
     id: null,
@@ -77,7 +81,7 @@ if (id>0){  //appel au service pour recuperer le contact
     description: '',
     email: '',
     numeroTel: '',
-    imageUrl: '',
+    imageUrl: '/assets/avatar.jpg',
   };
 
   this.formGroup = this.fb.group({
@@ -102,21 +106,28 @@ if (id>0){  //appel au service pour recuperer le contact
   });
 }
   
-  }
-  onSubmit() {
-    //tester si formulaire valide
-    if (this.formGroup.valid) {
-      //faire appel au update du service CRUD
-      this.contactService
-        .updateContact(this.formGroup.value)
-        .subscribe((data) => {
-          //afficher message pop-up
-          this.snackBar.open('Updated!', '', { duration: 1000 });
-        });
-    }
-  }
+}
 
-  onCancel() {
-    this.router.navigate(['/contact-list']);
-  }
+onSubmit(){
+  //tester si formulaire valide
+  if (this.formGroup.valid) {
+  if (this.contact.id > 0){
+    //faire appel au update du service CRUD
+    this.contactService
+      .updateContact(this.formGroup.value)
+      .subscribe((data) => {
+        //afficher message pop-up
+        this.snackBar.open('Updated!', '', { duration: 1000 });
+      });
+  } else {
+   this.contactService.addContact(this.formGroup.value).subscribe((data) => {
+   //afficher message pop-up
+        this.snackBar.open('Contact added!', '', { duration: 1000 });
+      });
+   }
+ }
+}
+onCancel() {
+  this.router.navigate(['/contact-list']);
+}
 }

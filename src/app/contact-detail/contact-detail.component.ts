@@ -120,6 +120,7 @@ onSubmit(){
         this.snackBar.open('Updated!', '', { duration: 1000 });
       });
   } else {
+    
    this.contactService.addContact(this.formGroup.value).subscribe((data) => {
    //afficher message pop-up
         this.snackBar.open('Contact added!', '', { duration: 1000 });
@@ -127,6 +128,7 @@ onSubmit(){
    }
  }
 }
+
 onCancel() {
   this.router.navigate(['/contact-list']);
 }

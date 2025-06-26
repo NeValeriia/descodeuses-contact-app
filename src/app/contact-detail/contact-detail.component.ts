@@ -44,36 +44,64 @@ export class ContactDetailComponent implements OnInit {
     //je recupere le Id de mon URL et je le converti au nombre
     //pour faire appel au fetch by ID du service CRUD
     const id = Number(this.route.snapshot.paramMap.get('id'));
+if (id>0){  //appel au service pour recuperer le contact
+  this.contactService.getContact(id).subscribe((data) => {
+    this.contact = data;
 
-    //appel au service pour recuperer le contact
-    this.contactService.getContact(id).subscribe((data) => {
-      this.contact = data;
-
-      this.formGroup = this.fb.group({
-        id: new FormControl<number | null>(this.contact.id, [
-          Validators.required,
-        ]),
-        nom: new FormControl<string | null>(this.contact.nom, [
-          Validators.required,
-        ]),
-        prenom: new FormControl<string | null>(this.contact.prenom, [
-          Validators.required,
-        ]),
-        description: new FormControl<string | null>(this.contact.description),
-        email: new FormControl<string | null>(this.contact.email, [
-          Validators.required,
-          Validators.email,
-        ]),
-        numeroTel: new FormControl<string | null>(this.contact.numeroTel, [
-          Validators.required,
-        ]),
-        imageUrl: new FormControl<string | null>(this.contact.imageUrl),
-      });
+    this.formGroup = this.fb.group({
+      id: new FormControl<number | null>(this.contact.id, [
+        Validators.required,
+      ]),
+      nom: new FormControl<string | null>(this.contact.nom, [
+        Validators.required,
+      ]),
+      prenom: new FormControl<string | null>(this.contact.prenom, [
+        Validators.required,
+      ]),
+      description: new FormControl<string | null>(this.contact.description),
+      email: new FormControl<string | null>(this.contact.email, [
+        Validators.required,
+        Validators.email,
+      ]),
+      numeroTel: new FormControl<string | null>(this.contact.numeroTel, [
+        Validators.required,
+      ]),
+      imageUrl: new FormControl<string | null>(this.contact.imageUrl),
     });
+  });
+} else {
+  this.contact = {
+    id: null,
+    nom: '',
+    prenom: '',
+    description: '',
+    email: '',
+    numeroTel: '',
+    imageUrl: '',
+  };
 
-    this.formGroup.valueChanges.subscribe((value) => {
-      console.log(value);
-    });
+  this.formGroup = this.fb.group({
+    id: new FormControl<number | null>(this.contact.id, [
+      Validators.required,
+    ]),
+    nom: new FormControl<string | null>(this.contact.nom, [
+      Validators.required,
+    ]),
+    prenom: new FormControl<string | null>(this.contact.prenom, [
+      Validators.required,
+    ]),
+    description: new FormControl<string | null>(this.contact.description),
+    email: new FormControl<string | null>(this.contact.email, [
+      Validators.required,
+      Validators.email,
+    ]),
+    numeroTel: new FormControl<string | null>(this.contact.numeroTel, [
+      Validators.required,
+    ]),
+    imageUrl: new FormControl<string | null>(this.contact.imageUrl),
+  });
+}
+  
   }
   onSubmit() {
     //tester si formulaire valide

@@ -22,11 +22,13 @@ export const routes: Routes = [
     path: 'contact-detail/:id',
     component: ContactDetailComponent,
     title: 'Contact detail',
+    
   },
   {
     path: 'contact-detail', //nouveau ContactDetailComponent sans parametre id
     component: ContactDetailComponent,
     title: 'Contact detail',
+    
   },
   {
     path: 'clavier', //nouveau ContactDetailComponent sans parametre id

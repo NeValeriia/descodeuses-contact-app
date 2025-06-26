@@ -53,7 +53,7 @@ export class ContactDetailComponent implements OnInit {
 
     this.formGroup = this.fb.group({
       id: new FormControl<number | null>(this.contact.id, [
-        Validators.required,
+        
       ]),
       nom: new FormControl<string | null>(this.contact.nom, [
         Validators.required,
@@ -86,7 +86,7 @@ export class ContactDetailComponent implements OnInit {
 
   this.formGroup = this.fb.group({
     id: new FormControl<number | null>(this.contact.id, [
-      Validators.required,
+      
     ]),
     nom: new FormControl<string | null>(this.contact.nom, [
       Validators.required,
@@ -123,8 +123,9 @@ onSubmit(){
     
    this.contactService.addContact(this.formGroup.value).subscribe((data) => {
    //afficher message pop-up
-        this.snackBar.open('Contact added!', '', { duration: 1000 });
+  this.snackBar.open('Contact added!', '', { duration: 1000 });
       });
+      this.formGroup.reset();
    }
  }
 }
